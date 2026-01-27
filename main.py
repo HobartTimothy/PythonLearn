@@ -30,4 +30,4 @@ if __name__ == '__main__':
     # loop.countdown2(3600)
     # loop.count_num(3600)
     # loop.count_num2(3600)
-    # loop.multi_table()
+    loop.multi_table()
