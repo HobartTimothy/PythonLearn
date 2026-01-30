@@ -1,7 +1,10 @@
+import os
+from multiprocessing import Process
+
 from statement import choose
 from statement import choose_use
 from statement import loop
-
+from multiproc import mp_process
 
 # 循环
 """
@@ -23,11 +26,18 @@ if __name__ == '__main__':
     test_list = [10, 11, 15, 20, 22, 33, 47, 55, 50, 61, 71, 76, 73, 81, 90, 91, 100, 101]
     even_odd_list = map(choose.check_even_odd, test_list)
     print(list(even_odd_list))
-"""
 
-if __name__ == '__main__':
     # loop.countdown(3600)
     # loop.countdown2(3600)
     # loop.count_num(3600)
     # loop.count_num2(3600)
-    loop.multi_table()
+    # loop.multi_table()
+"""
+
+if __name__ == '__main__':
+    print('Parent process %s.' % os.getpid())
+    p = Process(target=mp_process.run_proc, args=('test',))
+    print('Child process will start.')
+    p.start()
+    p.join()
+    print('Child process end.')
