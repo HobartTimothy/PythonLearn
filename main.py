@@ -1,5 +1,6 @@
 import os
 from multiprocessing import Process
+from multiprocessing import Pool
 
 from statement import choose
 from statement import choose_use
@@ -35,9 +36,20 @@ if __name__ == '__main__':
 """
 
 if __name__ == '__main__':
-    print('Parent process %s.' % os.getpid())
-    p = Process(target=mp_process.run_proc, args=('test',))
-    print('Child process will start.')
-    p.start()
+    # print('父进程 %s.' % os.getpid())
+    # p = Process(target=mp_process.run_proc, args=('test',))
+    # print('子进程开始.')
+    # p.start()
+    # p.join()
+    # print('子进程结束.')
+
+    p = Pool(4)
+
+    print('父进程 %s.' % os.getpid())
+    for i in range(5):
+        p.apply_async(mp_process.long_time_proc, args=(i,))
+    print('等待所有子进程执行结束')
+    # 对Pool对象调用join()方法会等待所有子进程执行完毕，调用join()之前必须先调用close()，调用close()之后就不能继续添加新的Process了。
+    p.close()
     p.join()
-    print('Child process end.')
+    print('所有子进程执行完成')
